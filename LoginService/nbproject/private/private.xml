@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/src/java/Database/DBConnect.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/test/Database/DBConnectTest.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/src/java/encryption/Encrypt.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/src/java/Service/LoginWebService.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/src/java/Validator/ValidateUser.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/test/Validator/ValidateUserTest.java</file>
-            <file>file:/C:/Users/Nichlas/Documents/NetBeansProjects/LoginService/src/java/Database/MainTest.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
