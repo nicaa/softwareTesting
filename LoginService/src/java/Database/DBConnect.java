@@ -49,7 +49,7 @@ public class DBConnect {
                 con = DriverManager.getConnection(DBURL, user, PW);
                 String salt = encrypt.getSalt();
                 String usern = username;
-                String passw = encrypt.md5(password + salt);
+                String passw = encrypt.sha256(password + salt);
 
                 String query = "insert into login (username , password , salt)" + " values(?,?,?)";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -88,7 +88,7 @@ public class DBConnect {
                 dbPassword = r1.getString("password");
             }
             
-            String passw = encrypt.md5(password + dbSalt);
+            String passw = encrypt.sha256(password + dbSalt);
             if (username.equalsIgnoreCase(dbUsername) && passw.equals(dbPassword)) {
                 access = true;
             }

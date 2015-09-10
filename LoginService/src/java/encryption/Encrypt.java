@@ -20,32 +20,33 @@ public class Encrypt {
 
     }
 
-    public String md5(String input) {
-        String md5 = null;
-        if (null == input) {
-            return null;
-        }
+    public String sha256(String base) {
         try {
-            //Create MessageDigest object for MD5
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            //Update input string in message digest
-            digest.update(input.getBytes(), 0, input.length());
-            //Converts message digest value in base 16 (hex) 
-            md5 = new BigInteger(1, digest.digest()).toString(16);
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error in MD5 Encruption method");
-            e.printStackTrace();
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
-        return md5;
     }
-    
+
     public String getSalt() throws NoSuchAlgorithmException {
         
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-       
-        String SaltString = new String(salt);
-        return SaltString;
+        byte[] r = new byte[256]; //2048 bit
+        SecureRandom random = new SecureRandom(); //provides a cryptographically strong random number generator (RNG).
+        random.nextBytes(r);
+        String s = new String(r);
+
+        return sha256(s); //converts into SHA256 and return
     }
 }
