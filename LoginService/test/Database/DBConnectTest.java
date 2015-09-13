@@ -45,10 +45,11 @@ public class DBConnectTest {
     public void testRegistration() {
         System.out.println("registration");
         String username = "666";
+        String email = "test@mail.com";
         String password = "123";
         DBConnect instance = new DBConnect();
         boolean expResult = false;
-        boolean result = instance.registration(username, password);
+        boolean result = instance.registration(username, email, password);
         assertEquals(expResult, result); 
     }
 

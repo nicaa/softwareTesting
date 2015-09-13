@@ -5,6 +5,7 @@
  */
 package Database;
 
+import Validator.ValidateUser;
 import encryption.Encrypt;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
@@ -28,6 +29,7 @@ public class DBConnect {
     private String user = "root";
     private String PW = "1234";
     private Encrypt encrypt = new Encrypt();
+    private ValidateUser validate = new ValidateUser();
 
     public DBConnect() {
         try {
@@ -39,23 +41,31 @@ public class DBConnect {
         }
     }
 
-    public boolean registration(String username, String password) {
+    public boolean registration(String username,String emailIn, String password ) {
         boolean userDontExist = true;
         try {
-            if (chechIfUserExist(username)) {
-                userDontExist = false;
+            if (validate.validateUsername(username)== false || validate.validateEmail(emailIn)== false || validate.validatePassword(password)== false) {
+                
+                System.out.println("Error In userValidate");
+                return false;
+            }
+            if(chechIfUserExist(username)){
                 System.out.println("User Exist in DB");
-            } else {
+                
+                return false;
+            }else{    
                 con = DriverManager.getConnection(DBURL, user, PW);
                 String salt = encrypt.getSalt();
                 String usern = username;
+                String email = emailIn;
                 String passw = encrypt.sha256(password + salt);
 
-                String query = "insert into login (username , password , salt)" + " values(?,?,?)";
+                String query = "insert into login (username , email ,password , salt)" + " values(?,?,?,?)";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                 preparedStmt.setString(1, usern);
-                preparedStmt.setString(2, passw);
-                preparedStmt.setString(3, salt);
+                preparedStmt.setString(2, email);
+                preparedStmt.setString(3, passw);
+                preparedStmt.setString(4, salt);
                 preparedStmt.execute();
                 con.close();
             }

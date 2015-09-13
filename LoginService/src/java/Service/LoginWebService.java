@@ -32,8 +32,8 @@ public class LoginWebService {
     }
     
     @WebMethod(operationName = "Registrate")
-    public boolean Registrate(String username, String password){
+    public boolean Registrate(String username,String email, String password){
 
-        return dBConnect.registration(username, password);
+        return dBConnect.registration(username, email ,password);
     }
 }
