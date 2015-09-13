@@ -6,6 +6,8 @@
 package Service;
 
 import Database.DBConnect;
+import MailSender.MailSender;
+import Validator.ValidateUser;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -17,6 +19,8 @@ import javax.jws.WebParam;
 @WebService(serviceName = "LoginWebService")
 public class LoginWebService {
     DBConnect dBConnect = new DBConnect();
+    ValidateUser validateUser = new ValidateUser();
+    MailSender mailSender = new MailSender();
     /**
      * This is a sample web service operation
      */
@@ -31,9 +35,55 @@ public class LoginWebService {
         return dBConnect.login(username, password);
     }
     
+    @WebMethod(operationName = "Hejabe")
+    public String HejAbe(String username){
+
+        return "Hejabe" + username;
+    }
+    
     @WebMethod(operationName = "Registrate")
     public boolean Registrate(String username,String email, String password){
 
         return dBConnect.registration(username, email ,password);
+    }
+    
+    @WebMethod(operationName = "ValUsername")
+    public boolean ValidateUsername(String username){
+
+        return validateUser.validateUsername(username);
+    }
+    
+    @WebMethod(operationName = "ValPassword")
+    public boolean ValidatePassword(String password){
+
+        return validateUser.validatePassword(password);
+    }
+    
+    @WebMethod(operationName = "ValEmail")
+    public boolean ValidateEmail(String email){
+
+        return validateUser.validateEmail(email);
+    }
+    
+    @WebMethod(operationName = "SendPassword")
+    public void SendPassword(String email){
+
+         mailSender.sendMail(email);
+    }
+    
+    @WebMethod(operationName = "WelcomeMail")
+    public void WelcomeMail(String email){
+
+         mailSender.welcomeMail(email);
+    }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    @WebMethod(operationName = "testtest")
+    public Boolean testtest() {
+        //TODO write your implementation code here:
+        return true;
     }
 }

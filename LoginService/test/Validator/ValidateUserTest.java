@@ -215,4 +215,75 @@ public class ValidateUserTest {
         assertEquals(expResult, result);
 
     }
+    @Test
+    public void testValidateEmail1() {
+        System.out.println("validateEmail1 Empty Email");
+        String email = "";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = false;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+    
+     @Test
+    public void testValidateEmail2() {
+        System.out.println("validateEmail2 No @ No .");
+        String email = "hej";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = false;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+     @Test
+    public void testValidateEmail3() {
+        System.out.println("validateEmail3 No @");
+        String email = "hej.dk";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = false;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+     @Test
+    public void testValidateEmail4() {
+        System.out.println("validateEmail4 succes like nic@stud.kea.dk");
+        String email = "nic@stud.kea.dk";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = true;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+    @Test
+    public void testValidateEmail5() {
+        System.out.println("validateEmail5 like nica@gmail");
+        String email = "nica@gmail";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = false;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+    @Test
+    public void testValidateEmail6() {
+        System.out.println("validateEmail6 succes like Nica1408@gmail.com");
+        String email = "Nica1408@gmail.com";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = true;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
+     @Test
+    public void testValidateEmail7() {
+        System.out.println("validateEmail 7 like @gmail.com");
+        String email = "@gmail.com";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = false;
+        boolean result = instance.validateEmail(email);
+        assertEquals(expResult, result);
+
+    }
 }

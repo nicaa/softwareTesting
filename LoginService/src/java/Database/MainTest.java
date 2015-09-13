@@ -19,14 +19,14 @@ public class MainTest {
         MailSender mailSender = new MailSender();
         //mailSender.sendMail("nica1408@gmail.com");
         //Registration Complete with hash and salt!
-        System.out.println(connect.registration("niica1234" ,"Nica1408@Gmail.com", "Testsdada1"));
+       // System.out.println(connect.registration("niica1234" ,"Nica1408@Gmail.com", "Testsdada1"));
         //user exist test complete!
         //System.out.println(connect.chechIfUserExist("tesu1"));
         //Login Complete!
         //System.out.println(connect.login("Imran", "123hej"));
         //System.out.println(connect.registration("123" ,"Email@email.com" , "123"));
         //System.out.println(connect.getData());
-        ValidateUser username = new ValidateUser();
+       // ValidateUser username = new ValidateUser();
         //System.out.println(username.validateUsername("wsss"));
         //System.out.println(username.validatePassword("s14aSt"));
         //System.out.println(username.validatePassword("wss21sdS"));
