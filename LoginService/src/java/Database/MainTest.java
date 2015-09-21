@@ -6,6 +6,7 @@
 package Database;
 
 import MailSender.MailSender;
+import PasswordGen.RandomPasswordGen;
 import Validator.ValidateUser;
 
 /**
@@ -17,6 +18,7 @@ public class MainTest {
 
         DBConnect connect = new DBConnect();
         MailSender mailSender = new MailSender();
+        RandomPasswordGen passwordGen = new RandomPasswordGen();
         //mailSender.sendMail("nica1408@gmail.com");
         //Registration Complete with hash and salt!
        // System.out.println(connect.registration("niica1234" ,"Nica1408@Gmail.com", "Testsdada1"));
@@ -31,6 +33,8 @@ public class MainTest {
         //System.out.println(username.validatePassword("s14aSt"));
         //System.out.println(username.validatePassword("wss21sdS"));
         //System.out.println(username.validateEmail("Nica1408gmail.com"));
-        
+        String password = String.valueOf(passwordGen.generatePswd(6,6,1,3,0));
+        System.out.println(connect.chechIfEmailExist("Nica1408@gmail.com"));
+        connect.changePassword("Email@email.com", "12");
     }
 }

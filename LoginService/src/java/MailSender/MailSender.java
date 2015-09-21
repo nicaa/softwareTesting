@@ -24,7 +24,7 @@ public class MailSender {
     String password = "HelloWorld123";
    // String mail = "nica1408@gmail.com"; //any valid email
     
-    public void sendMail(String mail){
+    public void forgotPasswordMail(String mail, String newPassword){
         Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -44,9 +44,9 @@ public class MailSender {
 			message.setFrom(new InternetAddress(senderMail));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(mail));
-			message.setSubject("Testing Subject");
-			message.setText("Dear Mail Crawler,"
-				+ "\n\n No spam to my email, please!");
+			message.setSubject("Requested new password - LoginService");
+			message.setText("Dear User,"
+				+ "\n\n Your new password is    " + newPassword);
                         
 			Transport.send(message);
 

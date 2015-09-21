@@ -7,6 +7,7 @@ package Service;
 
 import Database.DBConnect;
 import MailSender.MailSender;
+import PasswordGen.RandomPasswordGen;
 import Validator.ValidateUser;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -21,11 +22,13 @@ public class LoginWebService {
     DBConnect dBConnect = new DBConnect();
     ValidateUser validateUser = new ValidateUser();
     MailSender mailSender = new MailSender();
+    RandomPasswordGen passwordGen = new RandomPasswordGen();
     /**
      * This is a sample web service operation
      */
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
+        
         return "Hello " + txt + " !";
     }
     
@@ -35,10 +38,10 @@ public class LoginWebService {
         return dBConnect.login(username, password);
     }
     
-    @WebMethod(operationName = "Hejabe")
-    public String HejAbe(String username){
-
-        return "Hejabe" + username;
+    @WebMethod(operationName = "PasswordGen")
+    public String PasswordGen(){
+        String password = String.valueOf(passwordGen.generatePswd(8,8,1,4,0));
+        return password;
     }
     
     @WebMethod(operationName = "Registrate")
@@ -66,9 +69,9 @@ public class LoginWebService {
     }
     
     @WebMethod(operationName = "SendPassword")
-    public void SendPassword(String email){
+    public void SendPassword(String email, String newPassword){
 
-         mailSender.sendMail(email);
+         mailSender.forgotPasswordMail(email, newPassword);
     }
     
     @WebMethod(operationName = "WelcomeMail")
@@ -81,9 +84,15 @@ public class LoginWebService {
      * Web service operation
      * @return 
      */
-    @WebMethod(operationName = "testtest")
-    public Boolean testtest() {
-        //TODO write your implementation code here:
-        return true;
+    @WebMethod(operationName = "CheckEmailExist")
+    public Boolean CheckEmailExist(String email) {
+    
+        return dBConnect.chechIfEmailExist(email);
+    }
+    
+    @WebMethod(operationName = "ChangePassword")
+    public Boolean ChangePassword(String email, String newPassword) {
+    
+        return dBConnect.changePassword(email, newPassword);
     }
 }

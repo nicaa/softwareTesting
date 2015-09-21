@@ -78,38 +78,66 @@ public class DBConnect {
         return userDontExist;
     }
 
-    public boolean login(String username, String password) {
+    public boolean login(String email, String password) {
         //Select user from db based on uniqe username
         //get the salt en encrypt password to see if it matches the password givin in parameter.
         //return true if it does and false if no true gives access to app false dont.
         boolean access = false;
         
-        String dbUsername = "";
+        String dbEmail = "";
         String dbSalt = "";
         String dbPassword = "";
         
         try {
             con = DriverManager.getConnection(DBURL, user, PW);
-            PreparedStatement st = con.prepareStatement("select * from login where username = '" + username + "'");
+            PreparedStatement st = con.prepareStatement("select * from login where email = '" + email + "'");
             ResultSet r1 = st.executeQuery();
             while (r1.next()) {
-                dbUsername = r1.getString("username");
+                dbEmail = r1.getString("email");
                 dbSalt = r1.getString("salt");
                 dbPassword = r1.getString("password");
             }
             
             String passw = encrypt.sha256(password + dbSalt);
-            if (username.equalsIgnoreCase(dbUsername) && passw.equals(dbPassword)) {
+            if (email.equalsIgnoreCase(dbEmail) && passw.equals(dbPassword)) {
                 access = true;
             }
             
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error in CheckUserExistMethod");
+            System.out.println("Error in Login");
         }
         
         return access;
+    }
+    
+    public boolean changePassword(String email, String newPassword){
+        boolean pwChanged = false;
+        if (!chechIfEmailExist(email)) {
+            return false;
+        }
+        try {
+            String salt = encrypt.getSalt();
+            String passw = encrypt.sha256(newPassword + salt);
+            
+            con = DriverManager.getConnection(DBURL, user, PW);
+            PreparedStatement st = con.prepareStatement("UPDATE login SET password = ?, salt = ? "
+                    + " WHERE email = '" +email+"'");
+            
+            st.setString(1, passw);
+            st.setString(2, salt);
+            
+            st.executeUpdate();
+            st.close();
+            pwChanged = true;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return pwChanged;
     }
 
     public boolean chechIfUserExist(String username) {
@@ -126,6 +154,24 @@ public class DBConnect {
         } catch (SQLException ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error in CheckUserExistMethod");
+        }
+        return exist;
+    }
+    
+    public boolean chechIfEmailExist(String Email) {
+        //Returns True if Email is found.
+        boolean exist = false;
+        try {
+            con = DriverManager.getConnection(DBURL, user, PW);
+            PreparedStatement st = con.prepareStatement("select email from login where email = '" + Email + "'");
+            ResultSet r1 = st.executeQuery();
+            if (r1.next()) {
+                exist = true;
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error in CheckEmailExistMethod");
         }
         return exist;
     }
