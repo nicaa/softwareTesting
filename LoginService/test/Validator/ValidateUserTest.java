@@ -215,6 +215,35 @@ public class ValidateUserTest {
         assertEquals(expResult, result);
 
     }
+    
+    @Test
+    public void testValidatePassword8() {
+        System.out.println("Password between 8 and 30 chars");
+        String password = "ThisIsAPassword30";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = true;
+        boolean result = instance.validatePassword(password);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testValidatePasswordBoundary1() {
+        String password = "Passwor8";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = true;
+        boolean result = instance.validatePassword(password);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testValidatePasswordBoundary2() {
+        String password = "Passwooooooooooooooooooooord30";
+        ValidateUser instance = new ValidateUser();
+        boolean expResult = true;
+        boolean result = instance.validatePassword(password);
+        assertEquals(expResult, result);
+    }
+    
     @Test
     public void testValidateEmail1() {
         System.out.println("validateEmail1 Empty Email");
